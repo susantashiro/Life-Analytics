@@ -77,7 +77,7 @@ var Dashboard = React.createClass({
 
         this.drawText = function() {
             ctx.fillStyle = "#ddd";
-            ctx.font = "bold 32px Titillium Web";
+            ctx.font = "bold 42px Titillium Web";
             ctx.textBaseline = 'middle';
             ctx.textAlign = 'center';
             ctx.fillText(' ' + this.percent + '%', this.x, this.y);
@@ -142,7 +142,7 @@ var Dashboard = React.createClass({
 
         this.drawText = function() {
             ctx.fillStyle = "#ddd";
-            ctx.font = "bold 32px Titillium Web";
+            ctx.font = "bold 42px Titillium Web";
             ctx.textBaseline = 'middle';
             ctx.textAlign = 'center';
             ctx.fillText(' ', this.x, this.y);
