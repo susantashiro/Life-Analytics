@@ -18,6 +18,8 @@ var Page = React.createClass({
 			questionnaireStatus: false,
 			dashboardStatus: false,
 			emailAddress: '',
+      goal: '',
+      streak: 0
 		};
 	},
 	//Show Log In Form
@@ -47,12 +49,6 @@ var Page = React.createClass({
     this.setState({
       emailAddress: ReactDOM.findDOMNode(this.refs.form.refs.signUp.refs.email).value
     });
-
-    console.log(email);
-    console.log("createUser", this.state.emailAddress);
-
-
-
   	var password = ReactDOM.findDOMNode(this.refs.form.refs.signUp.refs.password).value;
   	var userObject = {
       firstName: firstName,
@@ -70,7 +66,6 @@ var Page = React.createClass({
 	        console.log('User Created!');
 					console.log(userObject);
 					this.setState({signUpStatus: false, loginStatus: false, questionnaireStatus: true, email: email});
-					console.log(this.state.email);
 	      }.bind(this),
 	      error: function(xhr, status, err) {
 	        console.log(err);
@@ -102,16 +97,18 @@ var Page = React.createClass({
       data: JSON.stringify(userObject),
       success: function(res){
         console.log('login works');
-
-        this.setState({ 
+        console.log(res)
+        this.setState({
           signUpStatus: false,
           loginStatus: false,
           questionnaireStatus: false,
-          dashboardStatus: true
+          dashboardStatus: true,
+          goal: res.goal,
+          streak: res.streak
         });
       }.bind(this),
       error: function(xhr, status, error) {
-        alert("Invalid email and/or password. Please try again."); 
+        alert("Invalid email and/or password. Please try again.");
 
       }
     }); // closes ajax
@@ -132,14 +129,66 @@ var Page = React.createClass({
 			data: JSON.stringify(userObject),
 			success: function(res){
 				console.log('questionnaire works');
+        console.log("this is in the gotQuestion", goal);
 				// console.log(JSON.parse(res));
-				this.setState({signUpStatus: false, loginStatus: false, questionnaireStatus: false, dashboardStatus: true});
+				this.setState({
+          signUpStatus: false,
+          loginStatus: false,
+          questionnaireStatus: false,
+          dashboardStatus: true,
+          goal: goal
+        });
 			}.bind(this),
 			error: function(xhr, status, err) {
 				console.log(err);
 			}
 		});
 	},
+  resetStreak: function(event) {
+    event.preventDefault();
+    userObject = {
+      email: this.state.emailAddress,
+      streak: 0
+    };
+    $.ajax({
+      url: 'http://localhost:3000/updateStreak',
+      method: 'POST',
+      contentType: 'application/json',
+      data: JSON.stringify(userObject),
+      success: function(res) {
+        console.log('reset streak success');
+        console.log('increaseStreak ',res);
+				this.setState({streak: 0});
+      }.bind(this),
+      error: function(xhr, status, err) {
+       console.log(err);
+      }
+    });
+  },
+
+  increaseStreak: function(event) {
+    event.preventDefault();
+    var newStreak = this.state.streak + 1;
+    userObject = {
+      email: this.state.emailAddress,
+      streak: newStreak
+    }
+    $.ajax({
+      url: 'http://localhost:3000/updateStreak',
+      method: 'POST',
+      contentType: 'application/json',
+      data: JSON.stringify(userObject),
+      success: function(res) {
+        console.log('increase streak success');
+        console.log('increaseStreak ',res);
+				this.setState({streak: newStreak});
+      }.bind(this),
+      error: function(xhr, status, err) {
+       console.log(err);
+      }
+    });
+  },
+
 
 	render: function(){
 		if(!this.state.dashboardStatus && !this.state.questionnaireStatus) {
@@ -151,17 +200,16 @@ var Page = React.createClass({
 		}
 		else if(this.state.questionnaireStatus) {
 			console.log('insideeeee questions');
-			return( 
+			return(
         <div>
 					<Questionnaire ref="question" emailAddress={this.state.emailAddress} gotQuestion={this.gotQuestion} />
 				</div>
         )
 		}
 		else if(this.state.dashboardStatus) {
-			// console.log("INSIDE EHRERERR");
 			return(
 				<div>
-					<Dashboard emailAddress={this.state.emailAddress} />
+					<Dashboard goal={this.state.goal} streak={this.state.streak} emailAddress={this.state.emailAddress} resetStreak={this.resetStreak} increaseStreak={this.increaseStreak} />
 				</div>
 			)
 		}

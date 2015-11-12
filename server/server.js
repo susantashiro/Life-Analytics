@@ -114,6 +114,7 @@ app.use(express.static(path.join(__dirname, './../client/')));
 
 app.post('/create', userController.createUser);
 app.post('/login', userController.verifyUser);
+app.post('/updateStreak', userController.updateUserInfo);
 
 
 

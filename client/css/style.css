@@ -333,10 +333,28 @@ textarea {
 }
 
  /* ========= Graphs ========= */
+ .button-container {
+  margin: auto;
+  text-align: center;
+ }
+
+ #yes-btn, #no-btn {
+  display: inline-block;
+  margin: 0px 30px;
+  width: 25%;
+ }
+
+ #no-btn {
+  background-color: #d9534f;
+ }
+
+ #no-btn:hover {
+  background-color: #c9302c;
+ }
 
  .large-graph {
    height: 610px;
-   width: 600px;
+   width: 800px;
   margin: 0 auto;
    display: block;
  }
@@ -534,4 +552,7 @@ footer {
 
 .percentage {
   margin: auto;
+  width: 800px;
+  position: relative;
+  bottom: 125px;
 }
