@@ -9,6 +9,7 @@ var Dashboard = React.createClass({
   componentWillReceiveProps: function(nextProps) {
     var streak = nextProps.streak;
 
+
     $(document).ready(function() {
 
         if(streak > 25) {
@@ -44,7 +45,7 @@ var Dashboard = React.createClass({
   },
   componentDidMount: function() {
     var streak = this.props.streak;
-    
+
     $(document).ready(function() {
 
         if(streak > 25) {

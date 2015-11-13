@@ -15,10 +15,10 @@ mongoose.connection.once('open', function() {
 });
 
 // messageController.sendText();
-
+//
 // setTimeout(function(){
 // 	messageController.getResponse();
-// }, 20000)
+// }, 10000)
 
 // new CronJob('1 * * * * *', function(){
 //   messageController.getResponse();
