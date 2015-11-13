@@ -14,6 +14,7 @@ describe('GET index.html', function() {
       .expect(200, done());
   });
 });
+
 describe('Creating users', function() {
   before(function(done) {
     User.remove({}, function() {
@@ -34,6 +35,7 @@ describe('Creating users', function() {
       });
     });
   });
+
 describe('POST request to "/login" route with incorrect information sends an error', function() {
   it('should respond with error', function(done) {
     request(app)
@@ -47,3 +49,7 @@ describe('POST request to "/login" route with incorrect information sends an err
     });
   });
 });
+
+
+
+

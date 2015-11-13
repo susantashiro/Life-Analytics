@@ -11,10 +11,14 @@ var mongoURI = process.env.NODE_ENV === 'test' ? 'mongodb://localhost/test' : 'm
 
 mongoose.connect(mongoURI);
 mongoose.connection.once('open', function() {
-	console.log('Connected with MongoDB ORM - mongodb-orm');
+    console.log('Connected with MongoDB ORM - mongodb-orm');
 });
 
 // messageController.sendText();
+//
+// setTimeout(function(){
+// 	messageController.getResponse();
+// }, 10000)
 
 // new CronJob('1 * * * * *', function(){
 //   messageController.getResponse();
